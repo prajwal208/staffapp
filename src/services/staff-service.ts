@@ -1,10 +1,6 @@
 import { apiRequest } from '@/services/api-client';
 import type { CompleteOrderResponse, Staff } from '@/types/api';
 
-type CompleteOrderRequest = {
-  items: { orderNo: number }[];
-};
-
 function unwrapCompleteOrderResponse(data: unknown): CompleteOrderResponse {
   if (!data || typeof data !== 'object') {
     throw new Error('Invalid complete order response');
@@ -37,14 +33,10 @@ export async function getStaffProfile(): Promise<Staff> {
 }
 
 export async function completeOrder(orderNo: number): Promise<CompleteOrderResponse> {
-  const payload: CompleteOrderRequest = {
-    items: [{ orderNo: Number(orderNo) }],
-  };
-
   const response = await apiRequest<unknown>('/staff/orders/complete', {
     method: 'POST',
     auth: true,
-    body: payload,
+    body: { orderNo: Number(orderNo) },
   });
 
   return unwrapCompleteOrderResponse(response);

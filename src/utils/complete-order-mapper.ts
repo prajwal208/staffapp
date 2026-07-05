@@ -15,6 +15,7 @@ export type CompleteOrderViewModel = {
   orderNo: number;
   deliveryDate: string;
   orderType: string;
+  category?: string;
   customerImageUri?: string;
   designs: DesignImage[];
   measurements: Measurement[];
@@ -51,14 +52,30 @@ export function mapCompleteOrderToViewModel(
       value: item.value,
     })) ?? [];
 
+  const extraDesigns: DesignImage[] = [];
+  if (order.hangingsImageUrl) {
+    extraDesigns.push({ label: 'Hangings', imageUri: order.hangingsImageUrl });
+  }
+  if (order.patternImageUrl) {
+    extraDesigns.push({ label: 'Drawing Image', imageUri: order.patternImageUrl });
+  }
+
+  const allDesigns = [...designs];
+  for (const extra of extraDesigns) {
+    if (!allDesigns.some((item) => item.imageUri === extra.imageUri)) {
+      allDesigns.push(extra);
+    }
+  }
+
   return {
     customerName: order.customerName,
     billNo: order.billNo,
     orderNo: order.orderNo,
     deliveryDate: formatDeliveryDate(order.deliveryDate),
     orderType: order.orderType,
+    category: order.category || undefined,
     customerImageUri: order.customerImageUrl || undefined,
-    designs,
+    designs: allDesigns,
     measurements,
     features,
     hangingsImageUri: order.hangingsImageUrl ?? order.imageUrls[4],

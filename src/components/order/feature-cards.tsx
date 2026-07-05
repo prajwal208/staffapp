@@ -6,21 +6,66 @@ import type { Feature } from '@/types/order';
 type Props = { features: Feature[] };
 
 export function FeatureCards({ features }: Props) {
+  if (features.length === 0) return null;
+
   return (
     <View style={styles.container}>
-      {features.map((feature) => (
-        <View key={feature.label} style={styles.card}>
-          <Text style={styles.label}>{feature.label}</Text>
-          <Text style={styles.value}>{feature.value}</Text>
-        </View>
-      ))}
+      <Text style={styles.title}>Customizations</Text>
+      <View style={styles.grid}>
+        {features.map((feature) => (
+          <View key={feature.label} style={styles.card}>
+            <Text style={styles.label}>{feature.label.toUpperCase()}</Text>
+            <Text style={styles.value}>{feature.value.toUpperCase()}</Text>
+          </View>
+        ))}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two, paddingHorizontal: Spacing.three, marginTop: Spacing.four, justifyContent: 'space-between' },
-  card: { width: '22%', minWidth: 72, backgroundColor: Brand.white, borderRadius: 12, paddingVertical: Spacing.two, paddingHorizontal: Spacing.one, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 4, elevation: 2 },
-  label: { color: Brand.red, fontSize: 11, fontWeight: '700', textAlign: 'center' },
-  value: { color: Brand.blue, fontSize: 14, fontWeight: '700', marginTop: 4, textAlign: 'center' },
+  container: {
+    marginHorizontal: Spacing.three,
+    marginTop: Spacing.four,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: Brand.textDark,
+    marginBottom: Spacing.two,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.two,
+  },
+  card: {
+    width: '48%',
+    backgroundColor: Brand.white,
+    borderRadius: 12,
+    paddingVertical: Spacing.three,
+    paddingHorizontal: Spacing.two,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: Brand.borderLight,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+  },
+  label: {
+    color: Brand.textMuted,
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+  },
+  value: {
+    color: Brand.textDark,
+    fontSize: 16,
+    fontWeight: '700',
+    marginTop: 6,
+    textAlign: 'center',
+  },
 });

@@ -66,11 +66,15 @@ export const MaxContentWidth = 800;
 
 export const Brand = {
   blue: '#1B3A6B',
+  blueDark: '#0F2847',
+  blueAccent: '#2563EB',
+  blueLight: '#E8F0FE',
   red: '#E53935',
   green: '#4CAF50',
   grey: '#4A4A4A',
-  surfaceLight: '#F5F5F5',
+  textMuted: '#6B7280',
+  surfaceLight: '#F3F4F6',
   white: '#FFFFFF',
   textDark: '#1A1A2E',
-  borderLight: '#D0D0D0',
+  borderLight: '#E5E7EB',
 } as const;
