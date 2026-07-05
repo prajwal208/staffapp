@@ -116,7 +116,14 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
   }
 
   const url = `${API_V1}${path}`;
-  if (__DEV__) console.log('[API] request', { method, url, body, auth });
+  if (__DEV__) {
+    console.log('[API] request', {
+      method,
+      url,
+      auth,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+  }
 
   let response: Response;
   try {

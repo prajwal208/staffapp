@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -21,12 +21,14 @@ import { ApiError } from '@/services/api-client';
 export default function HomeScreen() {
   const { signOut, staff } = useAuth();
   const [orderNo, setOrderNo] = useState('');
+  const orderNoRef = useRef('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit() {
-    const order = Number(orderNo.trim());
-    if (!orderNo.trim()) {
+    const enteredOrderNo = (orderNoRef.current || orderNo).trim();
+    const order = Number.parseInt(enteredOrderNo, 10);
+    if (!enteredOrderNo) {
       setError('Please enter an Order No');
       return;
     }
@@ -73,7 +75,9 @@ export default function HomeScreen() {
             style={styles.input}
             value={orderNo}
             onChangeText={(text) => {
-              setOrderNo(text.replace(/\D/g, ''));
+              const cleaned = text.replace(/\D/g, '');
+              orderNoRef.current = cleaned;
+              setOrderNo(cleaned);
               setError('');
             }}
             placeholder="Order No (e.g. 5)"
