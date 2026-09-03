@@ -17,7 +17,7 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_HOST": "https://api.wevraa.in"
+        "EXPO_PUBLIC_API_HOST": "https://wevra-backend-459651677009.asia-south1.run.app"
       }
     },
     "production": {
@@ -26,7 +26,7 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_HOST": "https://api.wevraa.in"
+        "EXPO_PUBLIC_API_HOST": "https://wevra-backend-459651677009.asia-south1.run.app"
       }
     }
   },
