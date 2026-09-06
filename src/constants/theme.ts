@@ -77,4 +77,11 @@ export const Brand = {
   white: '#FFFFFF',
   textDark: '#1A1A2E',
   borderLight: '#E5E7EB',
+  authNavy: '#1E1B4B',
+  authSurface: '#F4F3FA',
+  authMuted: '#A8A5C8',
+  authBorder: '#E8E6F4',
+  authIndigo: '#6366F1',
+  authIndigoLight: '#EEEDFE',
+  authIndigoSoft: '#A5B4FC',
 } as const;

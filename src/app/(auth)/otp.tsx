@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -15,23 +15,45 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/contexts/auth-context';
 import { Brand, Spacing } from '@/constants/theme';
 import { requestStaffOtp } from '@/services/auth-service';
+import { clearPendingLoginPhone, getPendingLoginPhone } from '@/services/pending-login-store';
 import { ApiError } from '@/services/api-client';
 
-function maskMobile(mobile: string) {
-  if (mobile.length < 4) return mobile;
-  return `+91 XXXXXX${mobile.slice(-4)}`;
+function resolvePhoneParam(value: string | string[] | undefined) {
+  if (Array.isArray(value)) return value[0] ?? '';
+  return value ?? '';
+}
+
+function formatPhoneDisplay(phone: string) {
+  const digits = phone.replace(/\D/g, '');
+  if (digits.length === 10) {
+    return `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`;
+  }
+  if (digits.length > 0) {
+    return `+91 ${digits}`;
+  }
+  return '';
 }
 
 export default function OtpScreen() {
-  const { mobile } = useLocalSearchParams<{ mobile: string }>();
+  const params = useLocalSearchParams<{ mobile?: string; phone?: string }>();
   const { signIn } = useAuth();
+  const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
 
-  const phone = Array.isArray(mobile) ? mobile[0] : (mobile ?? '');
+  useEffect(() => {
+    const fromParams = resolvePhoneParam(params.mobile) || resolvePhoneParam(params.phone);
+    const resolved = fromParams || getPendingLoginPhone() || '';
+    setPhone(resolved);
+    if (!resolved) {
+      router.replace('/login');
+    }
+  }, [params.mobile, params.phone]);
+
   const isValidLength = otp.length === 6;
+  const phoneDisplay = formatPhoneDisplay(phone);
 
   async function handleVerify() {
     if (!isValidLength || !phone) return;
@@ -39,6 +61,7 @@ export default function OtpScreen() {
     setError('');
     try {
       await signIn(phone, otp);
+      clearPendingLoginPhone();
       router.replace('/(app)');
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Login failed. Try again.');
@@ -60,6 +83,8 @@ export default function OtpScreen() {
     }
   }
 
+  if (!phone) return null;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
@@ -67,7 +92,7 @@ export default function OtpScreen() {
         style={styles.container}>
         <View style={styles.content}>
           <Text style={styles.title}>Verify OTP</Text>
-          <Text style={styles.subtitle}>Code sent to {maskMobile(phone)}</Text>
+          <Text style={styles.subtitle}>Code sent to {phoneDisplay}</Text>
           <TextInput
             style={styles.input}
             value={otp}
