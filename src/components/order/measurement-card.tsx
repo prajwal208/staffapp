@@ -1,7 +1,7 @@
-import { SymbolView } from 'expo-symbols';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Brand, Spacing } from '@/constants/theme';
+import { Icon } from '@/components/icon';
+import { Colors } from '@/constants/theme';
 import type { Measurement } from '@/types/order';
 
 type Props = { measurements: Measurement[] };
@@ -12,13 +12,9 @@ export function MeasurementCard({ measurements }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.headerRow}>
-        <Text style={styles.title}>Detailed Measurements</Text>
+        <Text style={styles.title}>Detailed measurements</Text>
         <View style={styles.unitBadge}>
-          <SymbolView
-            name={{ ios: 'ruler', android: 'straighten', web: 'straighten' }}
-            size={12}
-            tintColor={Brand.blueAccent}
-          />
+          <Icon name="ruler" size={12} color={Colors.orange} strokeWidth={2.4} />
           <Text style={styles.unitText}>UNIT: INCHES</Text>
         </View>
       </View>
@@ -36,63 +32,65 @@ export function MeasurementCard({ measurements }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: Spacing.three,
-    marginTop: Spacing.four,
+    marginHorizontal: 18,
+    marginTop: 22,
   },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: Spacing.two,
-    gap: Spacing.two,
+    marginBottom: 10,
+    gap: 8,
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
-    color: Brand.textDark,
+    fontWeight: '900',
+    color: Colors.ink,
+    letterSpacing: -0.3,
     flex: 1,
   },
   unitBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: Brand.blueLight,
-    borderRadius: 12,
-    paddingHorizontal: Spacing.two,
+    backgroundColor: Colors.orangeTint,
+    borderRadius: 999,
+    paddingHorizontal: 10,
     paddingVertical: 4,
   },
   unitText: {
-    color: Brand.blueAccent,
+    color: Colors.orange,
     fontSize: 9,
-    fontWeight: '700',
+    fontWeight: '800',
     letterSpacing: 0.4,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: Spacing.two,
+    justifyContent: 'space-between',
+    rowGap: 10,
   },
   card: {
-    width: '48%',
-    backgroundColor: Brand.white,
-    borderRadius: 12,
-    paddingVertical: Spacing.three,
-    paddingHorizontal: Spacing.two,
+    width: '48.5%',
+    backgroundColor: Colors.card,
+    borderRadius: 18,
+    paddingVertical: 14,
+    paddingHorizontal: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Brand.borderLight,
+    borderColor: Colors.line,
   },
   label: {
-    color: Brand.textMuted,
+    color: Colors.muted,
     fontSize: 9,
-    fontWeight: '600',
-    letterSpacing: 0.4,
+    fontWeight: '700',
+    letterSpacing: 0.5,
     textAlign: 'center',
   },
   value: {
-    color: Brand.textDark,
-    fontSize: 18,
-    fontWeight: '700',
+    color: Colors.ink,
+    fontSize: 20,
+    fontWeight: '900',
     marginTop: 6,
     textAlign: 'center',
   },

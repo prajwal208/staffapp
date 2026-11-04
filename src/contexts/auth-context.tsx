@@ -1,6 +1,5 @@
-import * as SecureStore from 'expo-secure-store';
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Platform } from 'react-native';
+import * as Keychain from 'react-native-keychain';
 
 import { loginStaff } from '@/services/auth-service';
 import { setAccessTokenGetter, setOnUnauthorized } from '@/services/api-client';
@@ -12,24 +11,16 @@ const STAFF_KEY = 'staff_profile';
 const MOBILE_KEY = 'staff_mobile';
 
 async function getStoredItem(key: string) {
-  if (Platform.OS === 'web') return localStorage.getItem(key);
-  return SecureStore.getItemAsync(key);
+  const credentials = await Keychain.getGenericPassword({ service: key });
+  return credentials ? credentials.password : null;
 }
 
 async function setStoredItem(key: string, value: string) {
-  if (Platform.OS === 'web') {
-    localStorage.setItem(key, value);
-    return;
-  }
-  await SecureStore.setItemAsync(key, value);
+  await Keychain.setGenericPassword(key, value, { service: key });
 }
 
 async function deleteStoredItem(key: string) {
-  if (Platform.OS === 'web') {
-    localStorage.removeItem(key);
-    return;
-  }
-  await SecureStore.deleteItemAsync(key);
+  await Keychain.resetGenericPassword({ service: key });
 }
 
 type AuthContextValue = {

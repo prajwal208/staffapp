@@ -1,87 +1,47 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-import '@/global.css';
-
-import { Platform } from 'react-native';
-
 export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
-  },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
-  },
-} as const;
-
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
-
-export const Spacing = {
-  half: 2,
-  one: 4,
-  two: 8,
-  three: 16,
-  four: 24,
-  five: 32,
-  six: 64,
-} as const;
-
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;
-
-export const Brand = {
-  blue: '#1B3A6B',
-  blueDark: '#0F2847',
-  blueAccent: '#2563EB',
-  blueLight: '#E8F0FE',
-  red: '#E53935',
-  green: '#4CAF50',
-  grey: '#4A4A4A',
-  textMuted: '#6B7280',
-  surfaceLight: '#F3F4F6',
+  ink: '#1F1537',
+  inkSoft: '#5B4F78',
+  muted: '#8A819F',
+  faint: '#B3AAC4',
+  placeholder: '#CFC7DA',
+  line: '#EFE9F4',
+  bg: '#FFF9F6',
+  card: '#FFFFFF',
+  field: '#FBF8FD',
+  disabled: '#D9D2E3',
+  orange: '#FF752A',
+  pink: '#FF308C',
+  purple: '#C423CF',
+  orangeTint: '#FFF1E6',
+  pinkBorder: '#F4B6D6',
+  success: '#12B76A',
+  error: '#E5484D',
   white: '#FFFFFF',
-  textDark: '#1A1A2E',
-  borderLight: '#E5E7EB',
-  authNavy: '#1E1B4B',
-  authSurface: '#F4F3FA',
-  authMuted: '#A8A5C8',
-  authBorder: '#E8E6F4',
-  authIndigo: '#6366F1',
-  authIndigoLight: '#EEEDFE',
-  authIndigoSoft: '#A5B4FC',
+} as const;
+
+export const BrandGradient = [Colors.orange, Colors.pink, Colors.purple] as const;
+export const SoftGradient = ['#FFF1E6', '#FFE8F2', '#F6E8FF'] as const;
+
+export const Shadow = {
+  card: {
+    shadowColor: '#7838A0',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.12,
+    shadowRadius: 24,
+    elevation: 6,
+  },
+  soft: {
+    shadowColor: '#7838A0',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 2,
+  },
+  glow: {
+    shadowColor: Colors.pink,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.32,
+    shadowRadius: 18,
+    elevation: 8,
+  },
 } as const;

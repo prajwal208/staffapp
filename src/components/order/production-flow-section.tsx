@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Brand, Spacing } from '@/constants/theme';
+import { GradientFill } from '@/components/gradient';
+import { Colors } from '@/constants/theme';
 
 type Props = {
   previousStatus: string;
@@ -22,28 +23,21 @@ export function ProductionFlowSection({ previousStatus, currentStatus }: Props) 
   const progressPercent = Math.round(((activeIndex + 1) / steps.length) * 100);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.card}>
       <View style={styles.headerRow}>
-        <Text style={styles.title}>PRODUCTION FLOW</Text>
+        <Text style={styles.title}>Production flow</Text>
         <View style={styles.percentBadge}>
-          <Text style={styles.percentText}>{progressPercent}% COMPLETE</Text>
+          <Text style={styles.percentText}>{progressPercent}% complete</Text>
         </View>
       </View>
       <View style={styles.track}>
         {steps.map((step, index) => {
-          const isCompleted = index < activeIndex;
-          const isActive = index === activeIndex;
+          const isReached = index <= activeIndex;
           return (
             <View key={`${step}-${index}`} style={styles.segmentWrap}>
-              <View
-                style={[
-                  styles.segment,
-                  isCompleted && styles.segmentCompleted,
-                  isActive && styles.segmentActive,
-                ]}
-              />
+              <View style={styles.segment}>{isReached ? <GradientFill /> : null}</View>
               {step ? (
-                <Text style={[styles.stepLabel, (isCompleted || isActive) && styles.stepLabelActive]}>
+                <Text style={[styles.stepLabel, isReached && styles.stepLabelActive]}>
                   {step.toUpperCase()}
                 </Text>
               ) : null}
@@ -56,33 +50,40 @@ export function ProductionFlowSection({ previousStatus, currentStatus }: Props) 
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: Spacing.three,
-    marginTop: Spacing.four,
+  card: {
+    marginHorizontal: 18,
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: Colors.card,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: Colors.line,
   },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: Spacing.two,
+    marginBottom: 12,
   },
   title: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-    color: Brand.textMuted,
-    letterSpacing: 0.8,
+    color: Colors.purple,
+    letterSpacing: 1.3,
+    textTransform: 'uppercase',
   },
   percentBadge: {
-    backgroundColor: Brand.blueLight,
-    borderRadius: 12,
-    paddingHorizontal: Spacing.two,
+    backgroundColor: Colors.orangeTint,
+    borderRadius: 999,
+    paddingHorizontal: 10,
     paddingVertical: 4,
   },
   percentText: {
-    color: Brand.blueAccent,
+    color: Colors.orange,
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: '800',
     letterSpacing: 0.4,
+    textTransform: 'uppercase',
   },
   track: {
     flexDirection: 'row',
@@ -90,26 +91,21 @@ const styles = StyleSheet.create({
   },
   segmentWrap: {
     flex: 1,
-    gap: 6,
+    gap: 8,
   },
   segment: {
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: Brand.borderLight,
-  },
-  segmentCompleted: {
-    backgroundColor: Brand.blueDark,
-  },
-  segmentActive: {
-    backgroundColor: Brand.blueAccent,
+    height: 7,
+    borderRadius: 4,
+    backgroundColor: Colors.line,
+    overflow: 'hidden',
   },
   stepLabel: {
-    fontSize: 8,
-    fontWeight: '600',
-    color: Brand.textMuted,
+    fontSize: 9,
+    fontWeight: '700',
+    color: Colors.faint,
     textAlign: 'center',
   },
   stepLabelActive: {
-    color: Brand.blueDark,
+    color: Colors.ink,
   },
 });

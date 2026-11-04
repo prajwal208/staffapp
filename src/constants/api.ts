@@ -1,9 +1,7 @@
 import { stripTrailingSlash } from '@/utils/url';
 
-const DEFAULT_API_HOST = 'https://wevra-backend-459651677009.asia-south1.run.app';
-
 export const API_BASE_URL = stripTrailingSlash(
-  process.env.EXPO_PUBLIC_API_HOST ?? DEFAULT_API_HOST,
+  'https://wevra-backend-459651677009.asia-south1.run.app',
 );
 export const API_V1 = `${API_BASE_URL}/api/v1`;
 

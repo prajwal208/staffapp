@@ -1,7 +1,6 @@
-import { SymbolView } from 'expo-symbols';
-import { Pressable, Share, StyleSheet, Text } from 'react-native';
+import { Share, StyleSheet } from 'react-native';
 
-import { Brand, Spacing } from '@/constants/theme';
+import { GradientButton } from '@/components/gradient-button';
 import type { CompleteOrderViewModel } from '@/utils/complete-order-mapper';
 
 type Props = { order: CompleteOrderViewModel };
@@ -27,33 +26,19 @@ export function SharePrintButton({ order }: Props) {
   }
 
   return (
-    <Pressable style={styles.button} onPress={handleShare}>
-      <SymbolView
-        name={{ ios: 'square.and.arrow.up', android: 'share', web: 'share' }}
-        size={18}
-        tintColor={Brand.white}
-      />
-      <Text style={styles.text}>Share Order Summary</Text>
-    </Pressable>
+    <GradientButton
+      label="Share order summary"
+      icon="share"
+      onPress={handleShare}
+      style={styles.button}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Brand.blueDark,
-    borderRadius: 14,
-    height: 52,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: Spacing.two,
-    marginHorizontal: Spacing.three,
-    marginTop: Spacing.four,
-    marginBottom: Spacing.two,
-  },
-  text: {
-    color: Brand.white,
-    fontSize: 16,
-    fontWeight: '600',
+    marginHorizontal: 18,
+    marginTop: 22,
+    marginBottom: 8,
   },
 });

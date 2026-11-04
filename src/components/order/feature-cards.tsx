@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Brand, Spacing } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 import type { Feature } from '@/types/order';
 
 type Props = { features: Feature[] };
@@ -25,46 +25,43 @@ export function FeatureCards({ features }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: Spacing.three,
-    marginTop: Spacing.four,
+    marginHorizontal: 18,
+    marginTop: 22,
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
-    color: Brand.textDark,
-    marginBottom: Spacing.two,
+    fontWeight: '900',
+    color: Colors.ink,
+    letterSpacing: -0.3,
+    marginBottom: 10,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: Spacing.two,
+    justifyContent: 'space-between',
+    rowGap: 10,
   },
   card: {
-    width: '48%',
-    backgroundColor: Brand.white,
-    borderRadius: 12,
-    paddingVertical: Spacing.three,
-    paddingHorizontal: Spacing.two,
+    width: '48.5%',
+    backgroundColor: Colors.card,
+    borderRadius: 18,
+    paddingVertical: 14,
+    paddingHorizontal: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Brand.borderLight,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 1,
+    borderColor: Colors.line,
   },
   label: {
-    color: Brand.textMuted,
+    color: Colors.purple,
     fontSize: 10,
-    fontWeight: '600',
-    letterSpacing: 0.5,
+    fontWeight: '700',
+    letterSpacing: 0.6,
     textAlign: 'center',
   },
   value: {
-    color: Brand.textDark,
+    color: Colors.ink,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '800',
     marginTop: 6,
     textAlign: 'center',
   },
